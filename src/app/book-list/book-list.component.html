@@ -4,7 +4,7 @@
         <div class="content">
             <div class="header">{{ book.title }}</div>
             <div class="description" *ngIf="book.subtitle">{{ book.subtitle }}</div>
-            <div class="metadata">
+            <div class="description">
                 <span *ngFor="let author of book.authors; last as l">{{ author }} <span *ngIf="!l">, </span>
                 </span>
                 <br>
