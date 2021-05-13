@@ -1,2 +1,7 @@
-<bm-book-list></bm-book-list>
-<router-outlet></router-outlet>
+<bm-book-list 
+    *ngIf="viewstate === 'list'"
+    (showDetailsEvent)="showDetails($event)"></bm-book-list>
+<bm-book-details
+    *ngIf="viewstate === 'details'"
+    (showListEvent)="showList()"
+    [book]="book"></bm-book-details>
