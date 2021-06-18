@@ -87,46 +87,25 @@ const environment = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BookStoreService", function() { return BookStoreService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+
 
 class BookStoreService {
-    constructor() {
-        this.books = [
-            {
-                isbn: '9783864907791',
-                title: 'Angular',
-                authors: ['Ferdinand Malcher', 'Johannes Hoppe', 'Danny Kopenhagen'],
-                published: new Date(2020, 8, 1),
-                subtitle: 'Grundlagen, fortgeschrittene Themen und Best Practices',
-                rating: 5,
-                thumbnails: [{
-                        url: 'https://ng-buch.de/angular-cover.jpg',
-                        title: 'Buchcover'
-                    }],
-                description: 'Lernen Sie Angular mit diesem Praxisbuch!'
-            },
-            {
-                isbn: '9783864905520',
-                title: 'React',
-                authors: ['Oliver Zweigermann', 'Nils Hartmann'],
-                published: new Date(2019, 11, 12),
-                subtitle: 'Grundlagen, fortgeschrittene Techniken und Praxistipps',
-                rating: 3,
-                thumbnails: [{
-                        url: 'https://ng-buch.de/react-cover.jpg',
-                        title: 'Buchcover'
-                    }],
-                description: 'Das bewaehrte und umfassende Praxisbuch zu React.'
-            }
-        ];
+    constructor(http) {
+        this.http = http;
+        this.api = 'https://api4.angular-buch.com';
     }
     getAll() {
-        return this.books;
+        return this.http.get(`${this.api}/books`);
     }
     getSingle(isbn) {
-        return this.books.find(book => book.isbn === isbn);
+        return this.http.get(`${this.api}/book/${isbn}`);
+    }
+    remove(isbn) {
+        return this.http.delete(`${this.api}/book/${isbn}`, { responseType: 'text' });
     }
 }
-BookStoreService.ɵfac = function BookStoreService_Factory(t) { return new (t || BookStoreService)(); };
+BookStoreService.ɵfac = function BookStoreService_Factory(t) { return new (t || BookStoreService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
 BookStoreService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: BookStoreService, factory: BookStoreService.ɵfac, providedIn: 'root' });
 
 
@@ -262,7 +241,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _book_list_item_book_list_item_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./book-list-item/book-list-item.component */ "R56e");
 /* harmony import */ var _book_details_book_details_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./book-details/book-details.component */ "nwsM");
 /* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./home/home.component */ "9vUh");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
 
 
 
@@ -274,16 +255,18 @@ __webpack_require__.r(__webpack_exports__);
 class AppModule {
 }
 AppModule.ɵfac = function AppModule_Factory(t) { return new (t || AppModule)(); };
-AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]] });
-AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjector"]({ providers: [], imports: [[
+AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]] });
+AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineInjector"]({ providers: [], imports: [[
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClientModule"],
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
             _app_routing_module__WEBPACK_IMPORTED_MODULE_1__["AppRoutingModule"]
         ]] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"],
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"],
         _book_list_book_list_component__WEBPACK_IMPORTED_MODULE_3__["BookListComponent"],
         _book_list_item_book_list_item_component__WEBPACK_IMPORTED_MODULE_4__["BookListItemComponent"],
         _book_details_book_details_component__WEBPACK_IMPORTED_MODULE_5__["BookDetailsComponent"],
-        _home_home_component__WEBPACK_IMPORTED_MODULE_6__["HomeComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
+        _home_home_component__WEBPACK_IMPORTED_MODULE_6__["HomeComponent"]], imports: [_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClientModule"],
+        _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_1__["AppRoutingModule"]] }); })();
 
 
@@ -320,7 +303,7 @@ class BookListComponent {
         this.bs = bs;
     }
     ngOnInit() {
-        this.books = this.bs.getAll();
+        this.bs.getAll().subscribe(res => this.books = res);
     }
 }
 BookListComponent.ɵfac = function BookListComponent_Factory(t) { return new (t || BookListComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_book_store_service__WEBPACK_IMPORTED_MODULE_1__["BookStoreService"])); };
@@ -451,7 +434,7 @@ class BookDetailsComponent {
     }
     ngOnInit() {
         const params = this.route.snapshot.paramMap;
-        this.book = this.bs.getSingle(params.get('isbn'));
+        this.bs.getSingle(params.get('isbn')).subscribe(b => this.book = b);
     }
     getRating(num) {
         return new Array(num);
@@ -462,7 +445,7 @@ BookDetailsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, BookDetailsComponent_div_0_Template, 28, 8, "div", 0);
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.book);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJib29rLWRldGFpbHMuY29tcG9uZW50LmNzcyJ9 */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"]], styles: ["p[_ngcontent-%COMP%] { white-space: pre-wrap}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJvb2stZGV0YWlscy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLElBQUkscUJBQXFCIiwiZmlsZSI6ImJvb2stZGV0YWlscy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsicCB7IHdoaXRlLXNwYWNlOiBwcmUtd3JhcH0iXX0= */"] });
 
 
 /***/ }),
