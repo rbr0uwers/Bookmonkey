@@ -9,7 +9,7 @@ import { AbstractControl, NgModel } from '@angular/forms';
 export class FormMessagesComponent implements OnInit {
 
   @Input()
-  control!: AbstractControl | NgModel;
+  control!: AbstractControl | null;
 
   @Input()
   controlName!: string;
