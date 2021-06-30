@@ -32,6 +32,10 @@
     <button class="ui tiny red labeled icon button" (click)="removeBook()">
         <i class="remove icon"></i> Buch loeschen
     </button>
+    <a class="ui tiny yellow labeled icon button"
+        [routerLink]="['../../admin/edit', book.isbn]">
+        <i class="write icon"></i> Buck bearbeiten
+    </a>
 </div>
 
 <ng-template #loading>

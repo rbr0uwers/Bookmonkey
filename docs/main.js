@@ -82,6 +82,66 @@ const environment = {
 
 /***/ }),
 
+/***/ "C9lS":
+/*!**************************************************!*\
+  !*** ./src/app/edit-book/edit-book.component.ts ***!
+  \**************************************************/
+/*! exports provided: EditBookComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditBookComponent", function() { return EditBookComponent; });
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _shared_book_store_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/book-store.service */ "Mc/V");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _book_form_book_form_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../book-form/book-form.component */ "YBtx");
+
+
+
+
+
+
+function EditBookComponent_bm_book_form_2_Template(rf, ctx) { if (rf & 1) {
+    const _r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "bm-book-form", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("submitBook", function EditBookComponent_bm_book_form_2_Template_bm_book_form_submitBook_0_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r2); const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](); return ctx_r1.updateBook($event); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("book", ctx_r0.book)("editing", true);
+} }
+class EditBookComponent {
+    constructor(bs, route, router) {
+        this.bs = bs;
+        this.route = route;
+        this.router = router;
+    }
+    ngOnInit() {
+        this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(params => params.get('isbn')), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["switchMap"])((isbn) => this.bs.getSingle(isbn))).subscribe(book => this.book = book);
+    }
+    updateBook(book) {
+        this.bs.update(book).subscribe(() => {
+            this.router.navigate(['../../..', 'books', book.isbn], { relativeTo: this.route });
+        });
+    }
+}
+EditBookComponent.ɵfac = function EditBookComponent_Factory(t) { return new (t || EditBookComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_shared_book_store_service__WEBPACK_IMPORTED_MODULE_2__["BookStoreService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"])); };
+EditBookComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: EditBookComponent, selectors: [["bm-edit-book"]], decls: 3, vars: 1, consts: [[3, "book", "editing", "submitBook", 4, "ngIf"], [3, "book", "editing", "submitBook"]], template: function EditBookComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "h1");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1, "Buch bearbeiten");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](2, EditBookComponent_bm_book_form_2_Template, 1, 2, "bm-book-form", 0);
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", ctx.book);
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"], _book_form_book_form_component__WEBPACK_IMPORTED_MODULE_5__["BookFormComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJlZGl0LWJvb2suY29tcG9uZW50LmNzcyJ9 */"] });
+
+
+/***/ }),
+
 /***/ "KH6C":
 /*!****************************************!*\
   !*** ./src/app/shared/book-factory.ts ***!
@@ -161,6 +221,9 @@ class BookStoreService {
     }
     create(book) {
         return this.http.post(`${this.api}/book`, book, { responseType: 'text' }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.errorHandler));
+    }
+    update(book) {
+        return this.http.put(`${this.api}/book/${book.isbn}`, book, { responseType: 'text' }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.errorHandler));
     }
 }
 BookStoreService.ɵfac = function BookStoreService_Factory(t) { return new (t || BookStoreService)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])); };
@@ -296,11 +359,10 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BookFormComponent", function() { return BookFormComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _shared_book_factory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/book-factory */ "KH6C");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
-/* harmony import */ var _form_messages_form_messages_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../form-messages/form-messages.component */ "YtwM");
-/* harmony import */ var angular_date_value_accessor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! angular-date-value-accessor */ "6XRw");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
+/* harmony import */ var _form_messages_form_messages_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../form-messages/form-messages.component */ "YtwM");
+/* harmony import */ var angular_date_value_accessor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! angular-date-value-accessor */ "6XRw");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "ofXK");
 
 
 
@@ -308,135 +370,167 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const _c0 = ["bookForm"];
-function BookFormComponent_input_32_Template(rf, ctx) { if (rf & 1) {
-    const _r8 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "input", 21);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BookFormComponent_input_32_Template_input_ngModelChange_0_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r8); const ctx_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r7.book.thumbnails[0].url = $event; });
+function BookFormComponent_div_21_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 16);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "input", 17);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx_r5.book.thumbnails[0].url);
+    const i_r3 = ctx.index;
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("formControlName", i_r3);
 } }
-function BookFormComponent_input_34_Template(rf, ctx) { if (rf & 1) {
-    const _r10 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "input", 22);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BookFormComponent_input_34_Template_input_ngModelChange_0_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r10); const ctx_r9 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](); return ctx_r9.book.thumbnails[0].title = $event; });
+function BookFormComponent_div_31_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 18);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 19);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "input", 20);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 21);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "input", 22);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx_r6.book.thumbnails[0].title);
+    const i_r5 = ctx.index;
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("formGroupName", i_r5);
 } }
 class BookFormComponent {
-    constructor() {
-        this.book = _shared_book_factory__WEBPACK_IMPORTED_MODULE_1__["BookFactory"].empty();
+    constructor(fb) {
+        this.fb = fb;
         this.submitBook = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.editing = false;
     }
     submitForm() {
-        this.submitBook.emit(this.book);
-        this.book = _shared_book_factory__WEBPACK_IMPORTED_MODULE_1__["BookFactory"].empty();
+        const formValue = this.bookForm.value;
+        const authors = formValue.authors.filter((author) => author);
+        const thumbnails = formValue.thumbnails.filter((thumbnail) => thumbnail.url);
+        const isbn = this.editing ? this.book.isbn : formValue.isbn;
+        const newBook = Object.assign(Object.assign({}, formValue), { isbn,
+            authors,
+            thumbnails });
+        this.submitBook.emit(newBook);
         this.bookForm.reset();
     }
     ngOnInit() {
+        this.initForm();
+    }
+    ngOnChanges() {
+        this.initForm();
+        this.setFormValues(this.book);
+    }
+    setFormValues(book) {
+        this.bookForm.patchValue(book);
+        this.bookForm.setControl('authors', this.buildAuthorsArray(book.authors));
+        this.bookForm.setControl('thumbnails', this.buildThumbnailsArray(book.thumbnails));
+    }
+    initForm() {
+        if (this.bookForm)
+            return;
+        this.bookForm = this.fb.group({
+            title: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            subtitle: [''],
+            isbn: [{ value: '', disabled: this.editing }, [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(10),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(13)
+                ]],
+            description: [''],
+            authors: this.buildAuthorsArray(['']),
+            thumbnails: this.buildThumbnailsArray([
+                { title: '', url: '' }
+            ]),
+            published: []
+        });
+    }
+    buildAuthorsArray(values) {
+        return this.fb.array(values, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required);
+    }
+    buildThumbnailsArray(values) {
+        if (values) {
+            return this.fb.array(values.map(t => this.fb.group(t)));
+        }
+        //should not happen...
+        return this.fb.array([{ title: '', url: '' }]);
+    }
+    get authors() {
+        return this.bookForm.get('authors');
+    }
+    get thumbnails() {
+        return this.bookForm.get('thumbnails');
+    }
+    addAuthorControl() {
+        this.authors.push(this.fb.control(''));
+    }
+    addThumbnailsControl() {
+        this.thumbnails.push(this.fb.group({ url: '', title: '' }));
     }
 }
-BookFormComponent.ɵfac = function BookFormComponent_Factory(t) { return new (t || BookFormComponent)(); };
-BookFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: BookFormComponent, selectors: [["bm-book-form"]], viewQuery: function BookFormComponent_Query(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵviewQuery"](_c0, 3);
-    } if (rf & 2) {
-        let _t;
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.bookForm = _t.first);
-    } }, outputs: { submitBook: "submitBook" }, decls: 37, vars: 13, consts: [[1, "ui", "form", 3, "ngSubmit"], ["bookForm", "ngForm"], ["name", "title", "required", "", 3, "ngModel", "ngModelChange"], ["titleInput", "ngModel"], ["controlName", "title", 3, "control"], ["name", "subtitle", 3, "ngModel", "ngModelChange"], ["name", "isbn", "required", "", "minlength", "10", "maxlength", "13", 3, "ngModel", "ngModelChange"], ["isbnInput", "ngModel"], ["controlName", "isbn", 3, "control"], ["type", "date", "name", "published", "useValueAsDate", "", "required", "", 3, "ngModel", "ngModelChange"], ["dateInput", "ngModel"], ["controlName", "published", 3, "control"], ["name", "authors", "required", "", 3, "ngModel", "ngModelChange"], ["authorInput", "ngModel"], ["controlName", "author", 3, "control"], ["name", "description", 3, "ngModel", "ngModelChange"], [1, "two", "fields"], [1, "field"], ["name", "url", "placeholder", "URL", 3, "ngModel", "ngModelChange", 4, "ngIf"], ["name", "title", "placeholder", "Titel", 3, "ngModel", "ngModelChange", 4, "ngIf"], ["type", "submit", 1, "ui", "button", 3, "disabled"], ["name", "url", "placeholder", "URL", 3, "ngModel", "ngModelChange"], ["name", "title", "placeholder", "Titel", 3, "ngModel", "ngModelChange"]], template: function BookFormComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "form", 0, 1);
+BookFormComponent.ɵfac = function BookFormComponent_Factory(t) { return new (t || BookFormComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"])); };
+BookFormComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: BookFormComponent, selectors: [["bm-book-form"]], inputs: { book: "book", editing: "editing" }, outputs: { submitBook: "submitBook" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵNgOnChangesFeature"]], decls: 34, vars: 8, consts: [[1, "ui", "form", 3, "formGroup", "ngSubmit"], ["formControlName", "title"], ["controlName", "title", 3, "control"], ["formControlName", "subtitle"], ["formControlName", "isbn"], ["controlName", "isbn", 3, "control"], ["type", "date", "useValueAsDate", "", "required", "", "formControlName", "published"], ["controlName", "published", 3, "control"], ["type", "button", 1, "ui", "mini", "button", 3, "click"], ["formArrayName", "authors", 1, "fields"], ["class", "sixteen wide field", 4, "ngFor", "ngForOf"], ["controlName", "authors", 3, "control"], ["formControlName", "description"], ["formArrayName", "thumbnails"], ["class", "fields", 3, "formGroupName", 4, "ngFor", "ngForOf"], ["type", "submit", 1, "ui", "button", 3, "disabled"], [1, "sixteen", "wide", "field"], ["placeholder", "Autor", 3, "formControlName"], [1, "fields", 3, "formGroupName"], [1, "nine", "wide", "field"], ["placeholder", "URL", "formControlName", "url"], [1, "seven", "wide", "field"], ["placeholder", "Titel", "formControlName", "title"]], template: function BookFormComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "form", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngSubmit", function BookFormComponent_Template_form_ngSubmit_0_listener() { return ctx.submitForm(); });
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "label");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3, "Buchtitel");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "label");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Buchtitel");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "input", 2, 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BookFormComponent_Template_input_ngModelChange_4_listener($event) { return ctx.book.title = $event; });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](3, "input", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](4, "bm-form-messages", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "label");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6, "Untertitel");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](6, "bm-form-messages", 4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "label");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](8, "Untertitel");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "input", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "label");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9, "ISBN");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "input", 5);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BookFormComponent_Template_input_ngModelChange_9_listener($event) { return ctx.book.subtitle = $event; });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](10, "input", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](11, "bm-form-messages", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "label");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](13, "Erscheinungsdatum");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "label");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](11, "ISBN");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](14, "input", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](15, "bm-form-messages", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "label");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](17, "Autoren");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "input", 6, 7);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BookFormComponent_Template_input_ngModelChange_12_listener($event) { return ctx.book.isbn = $event; });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](18, "button", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function BookFormComponent_Template_button_click_18_listener() { return ctx.addAuthorControl(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](19, " + Autor");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](14, "bm-form-messages", 8);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "label");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](16, "Erscheinungsdatum");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "div", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](21, BookFormComponent_div_21_Template, 2, 1, "div", 10);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "input", 9, 10);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BookFormComponent_Template_input_ngModelChange_17_listener($event) { return ctx.book.published = $event; });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](22, "bm-form-messages", 11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "label");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](24, "Beschreibung");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](19, "bm-form-messages", 11);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "label");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](21, "Autor");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](25, "textarea", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](26, "label");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](27, "Bilder");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "input", 12, 13);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BookFormComponent_Template_input_ngModelChange_22_listener($event) { return (ctx.book.authors[0] = $event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "button", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function BookFormComponent_Template_button_click_28_listener() { return ctx.addThumbnailsControl(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](29, " + Bild");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](24, "bm-form-messages", 14);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](25, "label");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](26, "Beschreibung");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](27, "textarea", 15);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BookFormComponent_Template_textarea_ngModelChange_27_listener($event) { return ctx.book.description = $event; });
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "label");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](29, "Bild");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "div", 16);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](31, "div", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](32, BookFormComponent_input_32_Template, 1, 1, "input", 18);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](33, "div", 17);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](34, BookFormComponent_input_34_Template, 1, 1, "input", 19);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "button", 20);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](36, "Speichern");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](30, "div", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](31, BookFormComponent_div_31_Template, 5, 1, "div", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](32, "button", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](33, "Speichern");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
-        const _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](1);
-        const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](5);
-        const _r2 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](13);
-        const _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](18);
-        const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](23);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("formGroup", ctx.bookForm);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.book.title);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("control", _r1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.book.subtitle);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.book.isbn);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("control", _r2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.book.published);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("control", _r3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.book.authors[0]);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("control", _r4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.book.description);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.book.thumbnails);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.book.thumbnails);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("control", ctx.bookForm.get("title"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("control", ctx.bookForm.get("isbn"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("control", ctx.bookForm.get("published"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.authors.controls);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", _r0.invalid);
-    } }, directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["ɵangular_packages_forms_forms_ba"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgForm"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["RequiredValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgModel"], _form_messages_form_messages_component__WEBPACK_IMPORTED_MODULE_3__["FormMessagesComponent"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["MinLengthValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["MaxLengthValidator"], angular_date_value_accessor__WEBPACK_IMPORTED_MODULE_4__["DateValueAccessor"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJib29rLWZvcm0uY29tcG9uZW50LmNzcyJ9 */"] });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("control", ctx.bookForm.get("authors"));
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.thumbnails.controls);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", ctx.bookForm.invalid);
+    } }, directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_ba"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _form_messages_form_messages_component__WEBPACK_IMPORTED_MODULE_2__["FormMessagesComponent"], angular_date_value_accessor__WEBPACK_IMPORTED_MODULE_3__["DateValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["RequiredValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormArrayName"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgForOf"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupName"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJib29rLWZvcm0uY29tcG9uZW50LmNzcyJ9 */"] });
 
 
 /***/ }),
@@ -530,7 +624,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _book_form_book_form_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./book-form/book-form.component */ "YBtx");
 /* harmony import */ var _create_book_create_book_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./create-book/create-book.component */ "ypji");
 /* harmony import */ var _form_messages_form_messages_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./form-messages/form-messages.component */ "YtwM");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _edit_book_edit_book_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./edit-book/edit-book.component */ "C9lS");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
 
 
 
@@ -550,8 +646,8 @@ __webpack_require__.r(__webpack_exports__);
 class AppModule {
 }
 AppModule.ɵfac = function AppModule_Factory(t) { return new (t || AppModule)(); };
-AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]] });
-AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵdefineInjector"]({ providers: [
+AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_16__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]] });
+AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_16__["ɵɵdefineInjector"]({ providers: [
         {
             provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HTTP_INTERCEPTORS"],
             useClass: _shared_token_interceptor__WEBPACK_IMPORTED_MODULE_9__["TokenInterceptor"],
@@ -561,10 +657,10 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵdefineInjecto
             _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClientModule"],
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
             _app_routing_module__WEBPACK_IMPORTED_MODULE_1__["AppRoutingModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_10__["FormsModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ReactiveFormsModule"],
             angular_date_value_accessor__WEBPACK_IMPORTED_MODULE_11__["DateValueAccessorModule"]
         ]] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"],
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_16__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"],
         _book_list_book_list_component__WEBPACK_IMPORTED_MODULE_3__["BookListComponent"],
         _book_list_item_book_list_item_component__WEBPACK_IMPORTED_MODULE_4__["BookListItemComponent"],
         _book_details_book_details_component__WEBPACK_IMPORTED_MODULE_5__["BookDetailsComponent"],
@@ -572,10 +668,11 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵdefineInjecto
         _search_search_component__WEBPACK_IMPORTED_MODULE_8__["SearchComponent"],
         _book_form_book_form_component__WEBPACK_IMPORTED_MODULE_12__["BookFormComponent"],
         _create_book_create_book_component__WEBPACK_IMPORTED_MODULE_13__["CreateBookComponent"],
-        _form_messages_form_messages_component__WEBPACK_IMPORTED_MODULE_14__["FormMessagesComponent"]], imports: [_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClientModule"],
+        _form_messages_form_messages_component__WEBPACK_IMPORTED_MODULE_14__["FormMessagesComponent"],
+        _edit_book_edit_book_component__WEBPACK_IMPORTED_MODULE_15__["EditBookComponent"]], imports: [_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClientModule"],
         _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_1__["AppRoutingModule"],
-        _angular_forms__WEBPACK_IMPORTED_MODULE_10__["FormsModule"],
+        _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ReactiveFormsModule"],
         angular_date_value_accessor__WEBPACK_IMPORTED_MODULE_11__["DateValueAccessorModule"]] }); })();
 
 
@@ -715,14 +812,15 @@ function BookDetailsComponent_div_0_ng_container_9_Template(rf, ctx) { if (rf & 
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", author_r7, " ");
 } }
 function BookDetailsComponent_div_0_i_21_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "i", 12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "i", 14);
 } }
 function BookDetailsComponent_div_0_img_27_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "img", 13);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "img", 15);
 } if (rf & 2) {
     const thumbnail_r9 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("src", thumbnail_r9.url, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
 } }
+const _c0 = function (a1) { return ["../../admin/edit", a1]; };
 function BookDetailsComponent_div_0_Template(rf, ctx) { if (rf & 1) {
     const _r11 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
@@ -771,6 +869,10 @@ function BookDetailsComponent_div_0_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](29, "i", 11);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](30, " Buch loeschen ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](31, "a", 12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](32, "i", 13);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](33, " Buck bearbeiten ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
@@ -790,9 +892,11 @@ function BookDetailsComponent_div_0_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx_r0.book.description);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx_r0.book.thumbnails);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("routerLink", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpureFunction1"](9, _c0, ctx_r0.book.isbn));
 } }
 function BookDetailsComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "div", 14);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "div", 16);
 } }
 class BookDetailsComponent {
     constructor(bs, router, route) {
@@ -815,13 +919,13 @@ class BookDetailsComponent {
     }
 }
 BookDetailsComponent.ɵfac = function BookDetailsComponent_Factory(t) { return new (t || BookDetailsComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_book_store_service__WEBPACK_IMPORTED_MODULE_1__["BookStoreService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"])); };
-BookDetailsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: BookDetailsComponent, selectors: [["bm-book-details"]], decls: 3, vars: 2, consts: [[4, "ngIf", "ngIfElse"], ["loading", ""], [4, "ngIf"], [1, "ui", "divider"], [1, "ui", "grid"], [1, "four", "wide", "column"], [4, "ngFor", "ngForOf"], ["class", "yellow star icon", 4, "ngFor", "ngForOf"], [1, "ui", "small", "images"], [3, "src", 4, "ngFor", "ngForOf"], [1, "ui", "tiny", "red", "labeled", "icon", "button", 3, "click"], [1, "remove", "icon"], [1, "yellow", "star", "icon"], [3, "src"], [1, "ui", "active", "centered", "inline", "loader"]], template: function BookDetailsComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, BookDetailsComponent_div_0_Template, 31, 8, "div", 0);
+BookDetailsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: BookDetailsComponent, selectors: [["bm-book-details"]], decls: 3, vars: 2, consts: [[4, "ngIf", "ngIfElse"], ["loading", ""], [4, "ngIf"], [1, "ui", "divider"], [1, "ui", "grid"], [1, "four", "wide", "column"], [4, "ngFor", "ngForOf"], ["class", "yellow star icon", 4, "ngFor", "ngForOf"], [1, "ui", "small", "images"], [3, "src", 4, "ngFor", "ngForOf"], [1, "ui", "tiny", "red", "labeled", "icon", "button", 3, "click"], [1, "remove", "icon"], [1, "ui", "tiny", "yellow", "labeled", "icon", "button", 3, "routerLink"], [1, "write", "icon"], [1, "yellow", "star", "icon"], [3, "src"], [1, "ui", "active", "centered", "inline", "loader"]], template: function BookDetailsComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, BookDetailsComponent_div_0_Template, 34, 11, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, BookDetailsComponent_ng_template_1_Template, 1, 0, "ng-template", null, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplateRefExtractor"]);
     } if (rf & 2) {
         const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.book)("ngIfElse", _r1);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"]], styles: ["p[_ngcontent-%COMP%] { white-space: pre-wrap}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJvb2stZGV0YWlscy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLElBQUkscUJBQXFCIiwiZmlsZSI6ImJvb2stZGV0YWlscy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsicCB7IHdoaXRlLXNwYWNlOiBwcmUtd3JhcH0iXX0= */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["NgForOf"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterLinkWithHref"]], styles: ["p[_ngcontent-%COMP%] { white-space: pre-wrap}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJvb2stZGV0YWlscy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLElBQUkscUJBQXFCIiwiZmlsZSI6ImJvb2stZGV0YWlscy5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsicCB7IHdoaXRlLXNwYWNlOiBwcmUtd3JhcH0iXX0= */"] });
 
 
 /***/ }),
@@ -920,7 +1024,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _book_list_book_list_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./book-list/book-list.component */ "hmYs");
 /* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./home/home.component */ "9vUh");
 /* harmony import */ var _create_book_create_book_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./create-book/create-book.component */ "ypji");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _edit_book_edit_book_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./edit-book/edit-book.component */ "C9lS");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
 
 
 
@@ -954,14 +1060,18 @@ const routes = [
     {
         path: 'admin/create',
         component: _create_book_create_book_component__WEBPACK_IMPORTED_MODULE_4__["CreateBookComponent"]
+    },
+    {
+        path: 'admin/edit/:isbn',
+        component: _edit_book_edit_book_component__WEBPACK_IMPORTED_MODULE_5__["EditBookComponent"]
     }
 ];
 class AppRoutingModule {
 }
 AppRoutingModule.ɵfac = function AppRoutingModule_Factory(t) { return new (t || AppRoutingModule)(); };
-AppRoutingModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineNgModule"]({ type: AppRoutingModule });
-AppRoutingModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineInjector"]({ imports: [[_angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forRoot(routes)], _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"]] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵsetNgModuleScope"](AppRoutingModule, { imports: [_angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"]], exports: [_angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"]] }); })();
+AppRoutingModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineNgModule"]({ type: AppRoutingModule });
+AppRoutingModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineInjector"]({ imports: [[_angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forRoot(routes)], _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"]] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsetNgModuleScope"](AppRoutingModule, { imports: [_angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"]], exports: [_angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"]] }); })();
 
 
 /***/ }),
